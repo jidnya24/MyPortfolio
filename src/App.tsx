@@ -181,7 +181,7 @@ function App() {
       data-aos-delay="0"
     >
 
-      Hello Worrrrrrrld, I'm Jidnya. <br />Welcome to My Portfolio!
+      Hello World, I'm Jidnya. <br />Welcome to My Portfolio!
     </Typography>
     <Typography
       variant="h5"
@@ -247,7 +247,7 @@ function App() {
   variant="contained"
   color="inherit"
   component="a"
-  href="Jidnya_Mahajan_Resume.pdf"
+  href="Jidnya_Mahajan_CV.pdf"
   download
   sx={{
     mt: 3,
