@@ -181,7 +181,7 @@ function App() {
       data-aos-delay="0"
     >
 
-      Hello World, I'm Jidnya. <br />Welcome to My Portfolio!
+      Hello Worrrrrrrld, I'm Jidnya. <br />Welcome to My Portfolio!
     </Typography>
     <Typography
       variant="h5"
