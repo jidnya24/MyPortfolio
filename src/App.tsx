@@ -319,10 +319,15 @@ function App() {
   </Container>
 </Box>
 
+
 {/* Portfolio Section */}
 <Box sx={{ py: 12, borderBottom: '1px solid #eee' }} data-aos="fade-right" ref={portfolioRef}>
   <Container maxWidth="md">
-    <Typography variant="h3" data-aos="zoom-in" sx={{ textAlign: 'center' }}>
+    <Typography 
+      variant="h3" 
+      data-aos="zoom-in" 
+      sx={{ textAlign: 'center', mb: 4 }}
+    >
       Portfolio Showcase
     </Typography>
 
@@ -331,10 +336,11 @@ function App() {
       <Box
         sx={{
           display: 'flex',
-          width: '100%',
-          backgroundColor: '#fff', // Background is white by default
-          borderRadius: '4px', // Sharp corners
-          border: '1px solid #000', // Thin black border
+          flexDirection: { xs: 'column', sm: 'row' }, // 👉 Stack toggle buttons vertically on mobile
+          width: { xs: '100%', sm: 'auto' },
+          backgroundColor: '#fff',
+          borderRadius: '4px',
+          border: '1px solid #000',
           overflow: 'hidden',
         }}
       >
@@ -342,12 +348,13 @@ function App() {
           onClick={() => setSelectedCategory('techStack')}
           sx={{
             flex: 1,
-            backgroundColor: selectedCategory === 'techStack' ? '#000' : '#fff', 
-            color: selectedCategory === 'techStack' ? '#fff' : '#000', 
+            backgroundColor: selectedCategory === 'techStack' ? '#000' : '#fff',
+            color: selectedCategory === 'techStack' ? '#fff' : '#000',
             textAlign: 'center',
             padding: '10px 0',
             cursor: 'pointer',
-            transition: 'background-color 0.3s, color 0.3s', 
+            transition: 'background-color 0.3s, color 0.3s',
+            borderBottom: { xs: selectedCategory === 'techStack' ? '2px solid #000' : 'none', sm: 'none' }, // 👉 Add border effect on mobile
           }}
         >
           Tech Stack
@@ -356,12 +363,13 @@ function App() {
           onClick={() => setSelectedCategory('certifications')}
           sx={{
             flex: 1,
-            backgroundColor: selectedCategory === 'certifications' ? '#000' : '#fff', 
-            color: selectedCategory === 'certifications' ? '#fff' : '#000', 
+            backgroundColor: selectedCategory === 'certifications' ? '#000' : '#fff',
+            color: selectedCategory === 'certifications' ? '#fff' : '#000',
             textAlign: 'center',
             padding: '10px 0',
             cursor: 'pointer',
             transition: 'background-color 0.3s, color 0.3s',
+            borderTop: { xs: selectedCategory === 'certifications' ? '2px solid #000' : 'none', sm: 'none' },
           }}
         >
           Certifications
@@ -370,97 +378,83 @@ function App() {
     </Box>
 
     {/* Container for Tech Stack and Certifications */}
-    <Box sx={{ display: 'flex', gap: 4 }}>
-    {/* Tech Stack Section */}
-{selectedCategory === 'techStack' && (
-  <Box sx={{ flex: 1 }}>
-    <Grid container spacing={8}> 
-      {[
-        { name: 'HTML', logo: 'html.png', from: 'left' },
-        { name: 'CSS', logo: 'css.jpeg', from: 'left' },
-        { name: 'JS', logo: 'js.png', from: 'right' },
-        { name: 'ReactJS', logo: 'react.png', from: 'right' },
-        { name: 'Material UI', logo: 'materialUI.png', from: 'left' },
-        { name: 'Java', logo: 'java.png', from: 'left' },
-        { name: 'Spring Boot', logo: 'springboot.png', from: 'right' },
-        { name: 'C#', logo: 'csharp.png', from: 'right' },
-        { name: 'Entity Framework', logo: 'ef.png', from: 'left' },
-        { name: 'ASP.NET', logo: 'asp.net.jpeg', from: 'left' },
-        { name: 'MySQL', logo: 'mysql.png', from: 'right' },
-        { name: 'GitHub', logo: 'github.png', from: 'right' },
-      ].map((tech, index) => (
-        <Grid item xs={6} sm={3} key={tech.name}>
-          <Box
-            data-aos={tech.from === 'left' ? 'fade-right' : 'fade-left'}
-            data-aos-delay={index * 100}
-            sx={{
-              textAlign: 'center',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              transition: 'transform 0.2s ease-in-out',
-              '&:hover': {
-                transform: 'scale(1.05)', // Subtle scale effect on hover
-              },
-            }}
-          >
-            <Box
-              component="img"
-              src={tech.logo}
-              alt={tech.name}
-              sx={{ 
-                width: 80, height: 80, mb: 2 , 
-                height: tech.name === 'Java' ? 100 : 80,
-                height: tech.name === 'CSS' ? 90 : 80,
-                width: tech.name === 'CSS' ? 130 : 90,
-                height: tech.name === 'JS' ? 90 : 80,
-                width: tech.name === 'JS' ? 90 : 80,
-                height: tech.name === 'Entity Framework' ? 90 : 80,
-                width: tech.name === 'Entity Framework' ? 110 : 80,
-                
-                
-              }} // Increased size of logos
-            />
-            <Typography variant="body2">{tech.name}</Typography>
-          </Box>
-        </Grid>
-      ))}
-    </Grid>
-  </Box>
-)}
-
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+      
+      {/* Tech Stack Section */}
+      {selectedCategory === 'techStack' && (
+        <Box>
+          <Grid container spacing={4}>
+            {[
+              { name: 'HTML', logo: 'html.png', from: 'left' },
+              { name: 'CSS', logo: 'css.jpeg', from: 'left' },
+              { name: 'JS', logo: 'js.png', from: 'right' },
+              { name: 'ReactJS', logo: 'react.png', from: 'right' },
+              { name: 'Material UI', logo: 'materialUI.png', from: 'left' },
+              { name: 'Java', logo: 'java.png', from: 'left' },
+              { name: 'Spring Boot', logo: 'springboot.png', from: 'right' },
+              { name: 'C#', logo: 'csharp.png', from: 'right' },
+              { name: 'Entity Framework', logo: 'ef.png', from: 'left' },
+              { name: 'ASP.NET', logo: 'asp.net.jpeg', from: 'left' },
+              { name: 'MySQL', logo: 'mysql.png', from: 'right' },
+              { name: 'GitHub', logo: 'github.png', from: 'right' },
+            ].map((tech, index) => (
+              <Grid item xs={6} sm={3} key={tech.name}>
+                <Box
+                  data-aos={tech.from === 'left' ? 'fade-right' : 'fade-left'}
+                  data-aos-delay={index * 100}
+                  sx={{
+                    textAlign: 'center',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    transition: 'transform 0.2s ease-in-out',
+                    '&:hover': {
+                      transform: 'scale(1.05)',
+                    },
+                  }}
+                >
+                  <Box
+                    component="img"
+                    src={tech.logo}
+                    alt={tech.name}
+                    sx={{
+                      width: { xs: 60, sm: 80 }, // 👉 Smaller logo on mobile
+                      height: { xs: 60, sm: 80 },
+                      mb: 2,
+                      objectFit: 'contain',
+                    }}
+                  />
+                  <Typography variant="body2">{tech.name}</Typography>
+                </Box>
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
+      )}
 
       {/* Certifications Section */}
       {selectedCategory === 'certifications' && (
-        <Box sx={{ flex: 1 }}>
-          <Grid container spacing={3}>
+        <Box>
+          <Grid container spacing={4}>
             {[
-              {
-                certImage: 'Software_Trainee.png',
-              },
-              {
-                certImage: 'software_developer.png', // Image path
-              },
-              {
-                certImage: 'Udemy_SQL.jpg', // Image path
-              },
-              {
-                certImage: 'Jidnya Mahajan.png', // Image path  // Image path
-              },
+              { certImage: 'Software_Trainee.png' },
+              { certImage: 'software_developer.png' },
+              { certImage: 'Udemy_SQL.jpg' },
+              { certImage: 'Jidnya Mahajan.png' },
             ].map((cert, index) => (
               <Grid item xs={12} sm={6} key={index}>
-                <Card elevation={2}>
+                <Card elevation={2} sx={{ height: '100%' }}>
                   <CardContent>
-                    {/* Display only the image of the certification */}
                     <Box sx={{ mt: 2, display: 'flex', justifyContent: 'center' }}>
                       <img
-                        src={cert.certImage} // Image source
+                        src={cert.certImage}
                         alt={`Certification ${index + 1}`}
                         style={{
-                          width: '100%',  // Adjust the width as needed
-                          height: 'auto', // Maintain aspect ratio
-                          borderRadius: '8px', // Optional, for rounded corners
+                          width: '100%',
+                          height: 'auto',
+                          borderRadius: '8px',
+                          objectFit: 'contain',
                         }}
                       />
                     </Box>
@@ -477,70 +471,86 @@ function App() {
 
 
        {/* Contact Section */}
-       <Box sx={{ py: 12 }} data-aos="fade-right" ref={contactRef}>
-          <Container maxWidth="md">
-            <Typography variant="h3" sx={{ textAlign: 'center' }}>
-              Contact Me
-            </Typography>
+<Box sx={{ py: { xs: 6, md: 12 } }} data-aos="fade-right" ref={contactRef}>
+  <Container maxWidth="sm"> {/* Smaller maxWidth for better mobile view */}
+    <Typography
+      variant="h3"
+      sx={{
+        textAlign: 'center',
+        fontSize: { xs: '2rem', md: '3rem' }, // Adjust font size for mobile
+        mb: { xs: 4, md: 6 }, // Margin bottom responsive
+      }}
+    >
+      Contact Me
+    </Typography>
 
-            <form onSubmit={handleFormSubmit}>
-              <Box sx={{ mb: 3 }}>
-                <TextField
-                  label="Name"
-                  variant="outlined"
-                  fullWidth
-                  name="name" // Add the name attribute here
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  required
-                />
-              </Box>
+    <form onSubmit={handleFormSubmit}>
+      <Box sx={{ mb: { xs: 2, md: 3 } }}>
+        <TextField
+          label="Name"
+          variant="outlined"
+          fullWidth
+          name="name"
+          value={formData.name}
+          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+          required
+        />
+      </Box>
 
-              <Box sx={{ mb: 3 }}>
-                <TextField
-                  label="Email"
-                  variant="outlined"
-                  fullWidth
-                  name="email" // Add the name attribute here
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  required
-                />
-              </Box>
+      <Box sx={{ mb: { xs: 2, md: 3 } }}>
+        <TextField
+          label="Email"
+          variant="outlined"
+          fullWidth
+          name="email"
+          value={formData.email}
+          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+          required
+        />
+      </Box>
 
-              <Box sx={{ mb: 3 }}>
-                <TextField
-                  label="Message"
-                  variant="outlined"
-                  fullWidth
-                  name="message" // Add the name attribute here
-                  multiline
-                  rows={4}
-                  value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  required
-                />
-              </Box>
+      <Box sx={{ mb: { xs: 2, md: 3 } }}>
+        <TextField
+          label="Message"
+          variant="outlined"
+          fullWidth
+          name="message"
+          multiline
+          rows={4}
+          value={formData.message}
+          onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+          required
+        />
+      </Box>
 
-              <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                <Button
-                  type="submit"
-                  variant="contained"
-                  sx={{ bgcolor: 'black', color: 'white' }}
-                >
-                  Send Message
-                </Button>
-              </Box>
-            </form>
-          </Container>
-        </Box>
-        {/* Footer */}
+      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+        <Button
+          type="submit"
+          variant="contained"
+          sx={{
+            bgcolor: 'black',
+            color: 'white',
+            px: { xs: 4, md: 6 }, // Button padding left-right
+            py: { xs: 1, md: 1.5 }, // Button padding top-bottom
+            fontSize: { xs: '0.9rem', md: '1rem' },
+            '&:hover': {
+              bgcolor: '#333', // Slight color change on hover
+            },
+          }}
+        >
+          Send Message
+        </Button>
+      </Box>
+    </form>
+  </Container>
+</Box>
+{/* Footer */}
 <Box
   component="footer"
   sx={{
     backgroundColor: 'black',
     color: 'white',
-    py: 4,
+    py: { xs: 3, md: 4 }, // Adjusted padding for smaller screens
     mt: 6,
     borderTop: '1px solid #444',
   }}
@@ -548,12 +558,26 @@ function App() {
   <Container maxWidth="md">
     <Grid container spacing={2} alignItems="center" justifyContent="space-between">
       <Grid item xs={12} sm={6}>
-        <Typography variant="body2" sx={{ fontSize: '0.9rem' }}>
+        <Typography
+          variant="body2"
+          sx={{
+            fontSize: { xs: '0.8rem', sm: '0.9rem' },
+            textAlign: { xs: 'center', sm: 'left' }, // Center text on mobile
+          }}
+        >
           © {new Date().getFullYear()} Jidnya Mahajan. All rights reserved.
         </Typography>
       </Grid>
-      <Grid item xs={12} sm={6} sx={{ textAlign: { xs: 'left', sm: 'right' } }}>
-        <Box sx={{ display: 'flex', justifyContent: { xs: 'flex-start', sm: 'flex-end' }, gap: 2 }}>
+
+      <Grid item xs={12} sm={6}>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: { xs: 'center', sm: 'flex-end' }, // Center icons on mobile
+            gap: 2,
+            mt: { xs: 2, sm: 0 }, // Add top margin on mobile for spacing
+          }}
+        >
           <a href="https://github.com/jidnya24" target="_blank" rel="noopener noreferrer" style={{ color: 'white' }}>
             <Github size={20} />
           </a>
@@ -568,6 +592,7 @@ function App() {
     </Grid>
   </Container>
 </Box>
+
 
       </Box>
     </ThemeProvider>
