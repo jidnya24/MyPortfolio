@@ -238,56 +238,81 @@ function App() {
   </Container>
 </Box>
 
-        {/* About Section */}
+       {/* About Section */}
 <Box sx={{ py: 12, borderBottom: '1px solid #eee' }} ref={aboutRef}>
-  <Container maxWidth="md" sx={{ display: 'flex', alignItems: 'center' }}>
+  <Container 
+    maxWidth="md" 
+    sx={{ 
+      display: 'flex', 
+      flexDirection: { xs: 'column', md: 'row' }, // 👉 Stack vertically on small screens (xs), side-by-side on medium (md) and above
+      alignItems: 'center', 
+      textAlign: { xs: 'center', md: 'left' } // 👉 Center align text on mobile
+    }}
+  >
     {/* Left Section - Description */}
     <Box sx={{ flex: 1 }}>
       <Typography variant="h3" data-aos="fade-right">
         About Me
       </Typography>
-      <Typography variant="body1" paragraph sx={{ fontSize: '1.1rem', color: '#555' }} data-aos="fade-up">
+      <Typography 
+        variant="body1" 
+        paragraph 
+        sx={{ fontSize: '1.1rem', color: '#555' }} 
+        data-aos="fade-up"
+      >
         A Full Stack Developer specializing in modern web technologies. My journey includes building real-time 
         applications, integrating APIs, and working across the full software development lifecycle — from 
         database design to frontend implementation.
-
-
-        
       </Typography>
-      <Typography variant="body1" paragraph sx={{ fontSize: '1.1rem', color: '#555' }} data-aos="fade-up">
-      If you’re looking for a dedicated and adaptable developer to bring your ideas to life, feel free to reach out!
+      <Typography 
+        variant="body1" 
+        paragraph 
+        sx={{ fontSize: '1.1rem', color: '#555' }} 
+        data-aos="fade-up"
+      >
+        If you’re looking for a dedicated and adaptable developer to bring your ideas to life, feel free to reach out!
       </Typography>
       
       {/* Button to Download CV */}
       <Button
-  variant="contained"
-  color="inherit"
-  component="a"
-  href="Jidnya_Mahajan_CV.pdf"
-  download
-  sx={{
-    mt: 3,
-    backgroundColor: 'black', 
-    color: 'white',            
-    '&:hover': {
-      backgroundColor: '#333', 
-    },
-  }} data-aos="fade-right"
->
-  Download CV
-</Button>
+        variant="contained"
+        color="inherit"
+        component="a"
+        href="Jidnya_Mahajan_CV.pdf"
+        download
+        sx={{
+          mt: 3,
+          backgroundColor: 'black', 
+          color: 'white',            
+          '&:hover': {
+            backgroundColor: '#333', 
+          },
+        }}
+        data-aos="fade-right"
+      >
+        Download CV
+      </Button>
     </Box>
 
     {/* Right Section - Photo */}
-    <Box sx={{ flexShrink: 0, ml: 4 }} data-aos="zoom-in">
+    <Box 
+      sx={{ 
+        flexShrink: 0, 
+        ml: { xs: 0, md: 4 }, // 👉 No left margin on mobile
+        mt: { xs: 4, md: 0 }  // 👉 Add top margin on mobile to create space between text and image
+      }} 
+      data-aos="zoom-in"
+    >
       <img
-        src="nice.jpg" // replace with the photo you upload
+        src="nice.jpg" // replace with your photo
         alt="Your Name"
         style={{
           width: 250,
           height: 250,
           borderRadius: '50%',
           objectFit: 'cover',
+          margin: '0 auto', // 👉 Center image on mobile
+          display: 'block', // 👉 To allow margin auto
         }}
       />
     </Box>
