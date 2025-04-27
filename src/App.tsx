@@ -240,19 +240,44 @@ function App() {
   </Container>
 </Box>
 
-       {/* About Section */}
+{/* About Section */}
 <Box sx={{ py: 12, borderBottom: '1px solid #eee' }} ref={aboutRef}>
   <Container 
     maxWidth="md" 
     sx={{ 
       display: 'flex', 
-      flexDirection: { xs: 'column', md: 'row' }, // 👉 Stack vertically on small screens (xs), side-by-side on medium (md) and above
+      flexDirection: { xs: 'column', md: 'row' }, 
       alignItems: 'center', 
-      textAlign: { xs: 'center', md: 'left' } // 👉 Center align text on mobile
+      textAlign: { xs: 'center', md: 'left' } 
     }}
   >
+    {/* Right Section - Photo */}
+    <Box 
+      sx={{ 
+        flexShrink: 0, 
+        order: { xs: 1, md: 2 }, // 👉 On mobile, show image first
+        ml: { xs: 0, md: 4 },    
+        mt: { xs: 0, md: 0 },    
+        mb: { xs: 4, md: 0 }     // 👉 Add bottom margin on mobile to create space
+      }} 
+      data-aos="zoom-in"
+    >
+      <img
+        src="nice.jpg"
+        alt="Your Name"
+        style={{
+          width: 250,
+          height: 250,
+          borderRadius: '50%',
+          objectFit: 'cover',
+          margin: '0 auto',
+          display: 'block',
+        }}
+      />
+    </Box>
+
     {/* Left Section - Description */}
-    <Box sx={{ flex: 1 }}>
+    <Box sx={{ flex: 1, order: { xs: 2, md: 1 } }}>  {/* Text comes after image */}
       <Typography variant="h3" data-aos="fade-right">
         About Me
       </Typography>
@@ -284,10 +309,10 @@ function App() {
         download
         sx={{
           mt: 3,
-          backgroundColor: 'black', 
-          color: 'white',            
+          backgroundColor: 'black',
+          color: 'white',
           '&:hover': {
-            backgroundColor: '#333', 
+            backgroundColor: '#333',
           },
         }}
         data-aos="fade-right"
@@ -296,28 +321,6 @@ function App() {
       </Button>
     </Box>
 
-    {/* Right Section - Photo */}
-    <Box 
-      sx={{ 
-        flexShrink: 0, 
-        ml: { xs: 0, md: 4 }, // 👉 No left margin on mobile
-        mt: { xs: 4, md: 0 }  // 👉 Add top margin on mobile to create space between text and image
-      }} 
-      data-aos="zoom-in"
-    >
-      <img
-        src="nice.jpg" // replace with your photo
-        alt="Your Name"
-        style={{
-          width: 250,
-          height: 250,
-          borderRadius: '50%',
-          objectFit: 'cover',
-          margin: '0 auto', // 👉 Center image on mobile
-          display: 'block', // 👉 To allow margin auto
-        }}
-      />
-    </Box>
   </Container>
 </Box>
 
@@ -337,7 +340,7 @@ function App() {
       <Box
         sx={{
           display: 'flex',
-          flexDirection: { xs: 'column', sm: 'row' }, // 👉 Stack toggle buttons vertically on mobile
+          flexDirection: { xs: 'column', sm: 'column' }, // 👉 Stack toggle buttons vertically on mobile
           width: { xs: '100%', sm: 'auto' },
           backgroundColor: '#fff',
           borderRadius: '4px',
