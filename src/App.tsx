@@ -218,7 +218,7 @@ function App() {
           width: { xs: '100%', sm: 'auto' }, //responsive
          }}
         data-aos="fade-right"
-        data-aos-delay="2000"
+        data-aos-delay="1000"
       >
         GitHub
       </Button>
@@ -232,7 +232,7 @@ function App() {
           width: { xs: '100%', sm: 'auto' },
         }}
         data-aos="fade-left"
-        data-aos-delay="3000"
+        data-aos-delay="2000"
       >
         LinkedIn
       </Button>
@@ -251,55 +251,73 @@ function App() {
       textAlign: { xs: 'center', md: 'left' } 
     }}
   >
-    {/* Right Section - Photo */}
-    <Box 
-      sx={{ 
-        flexShrink: 0, 
-        order: { xs: 1, md: 2 }, // 👉 On mobile, show image first
-        ml: { xs: 0, md: 4 },    
-        mt: { xs: 0, md: 0 },    
-        mb: { xs: 4, md: 0 }     // 👉 Add bottom margin on mobile to create space
-      }} 
-      data-aos="zoom-in"
-    >
-      <img
-        src="nice.jpg"
-        alt="Your Name"
-        style={{
-          width: 250,
-          height: 250,
-          borderRadius: '50%',
-          objectFit: 'cover',
-          margin: '0 auto',
-          display: 'block',
-        }}
-      />
-    </Box>
 
     {/* Left Section - Description */}
-    <Box sx={{ flex: 1, order: { xs: 2, md: 1 } }}>  {/* Text comes after image */}
-      <Typography variant="h3" data-aos="fade-right">
+    <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+      
+      {/* Heading */}
+      <Typography 
+        variant="h3" 
+        sx={{ order: { xs: 1, md: 1 } }}
+        data-aos="fade-right"
+      >
         About Me
       </Typography>
+
+      {/* Right Section - Photo */}
+      <Box 
+        sx={{ 
+          flexShrink: 0, 
+          order: { xs: 2, md: 2 }, 
+          ml: { xs: 0, md: 4 },
+          mt: { xs: 3, md: 0 },
+          mb: { xs: 3, md: 0 },
+          display: 'flex',
+          justifyContent: { xs: 'center', md: 'flex-start' }
+        }} 
+        data-aos="zoom-in"
+      >
+        <img
+          src="nice.jpg"
+          alt="Your Name"
+          style={{
+            width: 250,
+            height: 250,
+            borderRadius: '50%',
+            objectFit: 'cover',
+          }}
+        />
+      </Box>
+
+      {/* Text Paragraphs */}
       <Typography 
         variant="body1" 
         paragraph 
-        sx={{ fontSize: '1.1rem', color: '#555' }} 
+        sx={{ 
+          order: { xs: 3, md: 3 }, 
+          fontSize: '1.1rem', 
+          color: '#555' 
+        }} 
         data-aos="fade-up"
       >
         A Full Stack Developer specializing in modern web technologies. My journey includes building real-time 
         applications, integrating APIs, and working across the full software development lifecycle — from 
         database design to frontend implementation.
       </Typography>
+
       <Typography 
         variant="body1" 
         paragraph 
-        sx={{ fontSize: '1.1rem', color: '#555' }} 
+        sx={{ 
+          order: { xs: 4, md: 4 }, 
+          fontSize: '1.1rem', 
+          color: '#555' 
+        }} 
         data-aos="fade-up"
       >
         If you’re looking for a dedicated and adaptable developer to bring your ideas to life, feel free to reach out!
       </Typography>
-      
+
       {/* Button to Download CV */}
       <Button
         variant="contained"
@@ -308,9 +326,11 @@ function App() {
         href="Jidnya_Mahajan_CV.pdf"
         download
         sx={{
+          order: { xs: 5, md: 5 },
           mt: 3,
           backgroundColor: 'black',
           color: 'white',
+          alignSelf: { xs: 'center', md: 'flex-start' }, // 👉 Center button on mobile
           '&:hover': {
             backgroundColor: '#333',
           },
@@ -319,6 +339,7 @@ function App() {
       >
         Download CV
       </Button>
+
     </Box>
 
   </Container>
