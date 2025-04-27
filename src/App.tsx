@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css'; // Import AOS styles
 import {
@@ -14,7 +14,10 @@ import {
   Toolbar,
   createTheme,
   ThemeProvider,
+  Drawer,
+  IconButton,
 } from '@mui/material';
+import { Menu as MenuIcon } from '@mui/icons-material';
 import emailjs from 'emailjs-com';
 import { Github, Mail, Linkedin } from 'lucide-react';
 
@@ -62,24 +65,25 @@ function App() {
   });
 
   const [selectedCategory, setSelectedCategory] = useState('techStack');
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
 
     emailjs
-    .sendForm('service_arlz1fc', 'template_zhuq869', e.target, 'Yi_5bV_QxCXLb3bHX')
-    .then(
-      (result) => {
-        console.log(result.text);
-        alert('Message Sent Successfully!');
-      },
-      (error) => {
-        console.log(error.text);
-        alert('Error sending message!');
-      }
-    );
-  setFormData({ name: '', email: '', message: '' }); // Clear form after submission
-};
+      .sendForm('service_arlz1fc', 'template_zhuq869', e.target, 'Yi_5bV_QxCXLb3bHX')
+      .then(
+        (result) => {
+          console.log(result.text);
+          alert('Message Sent Successfully!');
+        },
+        (error) => {
+          console.log(error.text);
+          alert('Error sending message!');
+        }
+      );
+    setFormData({ name: '', email: '', message: '' }); // Clear form after submission
+  };
 
   useEffect(() => {
     AOS.init({
@@ -87,6 +91,7 @@ function App() {
       once: true,
     });
   }, []);
+
   const homeRef = useRef(null);
   const aboutRef = useRef(null);
   const portfolioRef = useRef(null);
@@ -94,7 +99,9 @@ function App() {
 
   const scrollToSection = (ref) => {
     ref.current?.scrollIntoView({ behavior: 'smooth' });
+    setDrawerOpen(false); // Close the drawer after a selection
   };
+
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{ position: 'relative', minHeight: '100vh', bgcolor: 'white' }}>
@@ -143,22 +150,61 @@ function App() {
           />
         </Box>
 
+        {/* AppBar */}
         <AppBar position="fixed" elevation={0} sx={{ bgcolor: 'black', zIndex: 10 }}>
-          <Toolbar sx={{ minHeight:80}}>
+          <Toolbar sx={{ minHeight: 80 }}>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1, color: 'white' }}>
               Jidnya Mahajan
             </Typography>
-            
-            <Box sx={{ display: 'flex', gap: 2 }}>
-    <Button sx={{ color: 'white' }} onClick={() => scrollToSection(homeRef)}>Home</Button>
-    <Button sx={{ color: 'white' }} onClick={() => scrollToSection(aboutRef)}>About</Button>
-    <Button sx={{ color: 'white' }} onClick={() => scrollToSection(portfolioRef)}>Portfolio</Button>
-    <Button sx={{ color: 'white' }} onClick={() => scrollToSection(contactRef)}>Contact</Button>
-  </Box>
+
+            {/* Hamburger Menu Icon for Mobile */}
+            <IconButton
+              sx={{ color: 'white', display: { xs: 'block', sm: 'none' } }}
+              onClick={() => setDrawerOpen(true)}
+            >
+              <MenuIcon />
+            </IconButton>
+
+            {/* Desktop Navigation */}
+            <Box sx={{ display: { xs: 'none', sm: 'flex' }, gap: 2 }}>
+              <Button sx={{ color: 'white' }} onClick={() => scrollToSection(homeRef)}>
+                Home
+              </Button>
+              <Button sx={{ color: 'white' }} onClick={() => scrollToSection(aboutRef)}>
+                About
+              </Button>
+              <Button sx={{ color: 'white' }} onClick={() => scrollToSection(portfolioRef)}>
+                Portfolio
+              </Button>
+              <Button sx={{ color: 'white' }} onClick={() => scrollToSection(contactRef)}>
+                Contact
+              </Button>
+            </Box>
           </Toolbar>
         </AppBar>
-        
+
+        {/* Drawer for Mobile Navigation */}
+        <Drawer anchor="right" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
+          <Box sx={{ width: 250, padding: 2 }}>
+            <Button sx={{ color: 'black', width: '100%' }} onClick={() => scrollToSection(homeRef)}>
+              Home
+            </Button>
+            <Button sx={{ color: 'black', width: '100%' }} onClick={() => scrollToSection(aboutRef)}>
+              About
+            </Button>
+            <Button sx={{ color: 'black', width: '100%' }} onClick={() => scrollToSection(portfolioRef)}>
+              Portfolio
+            </Button>
+            <Button sx={{ color: 'black', width: '100%' }} onClick={() => scrollToSection(contactRef)}>
+              Contact
+            </Button>
+          </Box>
+        </Drawer>
+
+        {/* Spacer to avoid AppBar overlap */}
         <Toolbar />
+     
+
 
       {/* Home Section */}
 <Box
@@ -320,153 +366,50 @@ function App() {
 </Box>
 
 
-{/* Portfolio Section */}
-<Box sx={{ py: 12, borderBottom: '1px solid #eee' }} data-aos="fade-right" ref={portfolioRef}>
-  <Container maxWidth="md">
-    <Typography 
-      variant="h3" 
-      data-aos="zoom-in" 
-      sx={{ textAlign: 'center', mb: 4 }}
+{/* Button to toggle between Tech Stack and Certifications */}
+<Box sx={{ display: 'flex', justifyContent: 'center', mb: 4 }}>
+  <Box
+    sx={{
+      display: 'flex',
+      flexDirection: 'row', // ✨ Always keep it row on all screen sizes
+      flexWrap: { xs: 'wrap', sm: 'nowrap' }, // ✨ Wrap if very tight screen
+      width: 'auto',
+      backgroundColor: '#fff',
+      borderRadius: '4px',
+      border: '1px solid #000',
+      overflow: 'hidden',
+    }}
+  >
+    <Box
+      onClick={() => setSelectedCategory('techStack')}
+      sx={{
+        flex: 1,
+        backgroundColor: selectedCategory === 'techStack' ? '#000' : '#fff',
+        color: selectedCategory === 'techStack' ? '#fff' : '#000',
+        textAlign: 'center',
+        padding: '10px 20px', // ✨ Wider padding for better tap area
+        cursor: 'pointer',
+        transition: 'background-color 0.3s, color 0.3s',
+        borderRight: '1px solid #000', // ✨ Divider between buttons
+      }}
     >
-      Portfolio Showcase
-    </Typography>
-
-    {/* Button to toggle between Tech Stack and Certifications */}
-    <Box sx={{ display: 'flex', justifyContent: 'center', mb: 4 }}>
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: { xs: 'column', sm: 'row' }, // 👉 Stack toggle buttons vertically on mobile
-          width: { xs: '100%', sm: 'auto' },
-          backgroundColor: '#fff',
-          borderRadius: '4px',
-          border: '1px solid #000',
-          overflow: 'hidden',
-        }}
-      >
-        <Box
-          onClick={() => setSelectedCategory('techStack')}
-          sx={{
-            flex: 1,
-            backgroundColor: selectedCategory === 'techStack' ? '#000' : '#fff',
-            color: selectedCategory === 'techStack' ? '#fff' : '#000',
-            textAlign: 'center',
-            padding: '10px 0',
-            cursor: 'pointer',
-            transition: 'background-color 0.3s, color 0.3s',
-            borderBottom: { xs: selectedCategory === 'techStack' ? '2px solid #000' : 'none', sm: 'none' }, // 👉 Add border effect on mobile
-          }}
-        >
-          Tech Stack
-        </Box>
-        <Box
-          onClick={() => setSelectedCategory('certifications')}
-          sx={{
-            flex: 1,
-            backgroundColor: selectedCategory === 'certifications' ? '#000' : '#fff',
-            color: selectedCategory === 'certifications' ? '#fff' : '#000',
-            textAlign: 'center',
-            padding: '10px 0',
-            cursor: 'pointer',
-            transition: 'background-color 0.3s, color 0.3s',
-            borderTop: { xs: selectedCategory === 'certifications' ? '2px solid #000' : 'none', sm: 'none' },
-          }}
-        >
-          Certifications
-        </Box>
-      </Box>
+      Tech Stack
     </Box>
-
-    {/* Container for Tech Stack and Certifications */}
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-      
-      {/* Tech Stack Section */}
-      {selectedCategory === 'techStack' && (
-        <Box>
-          <Grid container spacing={4}>
-            {[
-              { name: 'HTML', logo: 'html.png', from: 'left' },
-              { name: 'CSS', logo: 'css.jpeg', from: 'left' },
-              { name: 'JS', logo: 'js.png', from: 'right' },
-              { name: 'ReactJS', logo: 'react.png', from: 'right' },
-              { name: 'Material UI', logo: 'materialUI.png', from: 'left' },
-              { name: 'Java', logo: 'java.png', from: 'left' },
-              { name: 'Spring Boot', logo: 'springboot.png', from: 'right' },
-              { name: 'C#', logo: 'csharp.png', from: 'right' },
-              { name: 'Entity Framework', logo: 'ef.png', from: 'left' },
-              { name: 'ASP.NET', logo: 'asp.net.jpeg', from: 'left' },
-              { name: 'MySQL', logo: 'mysql.png', from: 'right' },
-              { name: 'GitHub', logo: 'github.png', from: 'right' },
-            ].map((tech, index) => (
-              <Grid item xs={6} sm={3} key={tech.name}>
-                <Box
-                  data-aos={tech.from === 'left' ? 'fade-right' : 'fade-left'}
-                  data-aos-delay={index * 100}
-                  sx={{
-                    textAlign: 'center',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    transition: 'transform 0.2s ease-in-out',
-                    '&:hover': {
-                      transform: 'scale(1.05)',
-                    },
-                  }}
-                >
-                  <Box
-                    component="img"
-                    src={tech.logo}
-                    alt={tech.name}
-                    sx={{
-                      width: { xs: 60, sm: 80 }, // 👉 Smaller logo on mobile
-                      height: { xs: 60, sm: 80 },
-                      mb: 2,
-                      objectFit: 'contain',
-                    }}
-                  />
-                  <Typography variant="body2">{tech.name}</Typography>
-                </Box>
-              </Grid>
-            ))}
-          </Grid>
-        </Box>
-      )}
-
-      {/* Certifications Section */}
-      {selectedCategory === 'certifications' && (
-        <Box>
-          <Grid container spacing={4}>
-            {[
-              { certImage: 'Software_Trainee.png' },
-              { certImage: 'software_developer.png' },
-              { certImage: 'Udemy_SQL.jpg' },
-              { certImage: 'Jidnya Mahajan.png' },
-            ].map((cert, index) => (
-              <Grid item xs={12} sm={6} key={index}>
-                <Card elevation={2} sx={{ height: '100%' }}>
-                  <CardContent>
-                    <Box sx={{ mt: 2, display: 'flex', justifyContent: 'center' }}>
-                      <img
-                        src={cert.certImage}
-                        alt={`Certification ${index + 1}`}
-                        style={{
-                          width: '100%',
-                          height: 'auto',
-                          borderRadius: '8px',
-                          objectFit: 'contain',
-                        }}
-                      />
-                    </Box>
-                  </CardContent>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        </Box>
-      )}
+    <Box
+      onClick={() => setSelectedCategory('certifications')}
+      sx={{
+        flex: 1,
+        backgroundColor: selectedCategory === 'certifications' ? '#000' : '#fff',
+        color: selectedCategory === 'certifications' ? '#fff' : '#000',
+        textAlign: 'center',
+        padding: '10px 20px',
+        cursor: 'pointer',
+        transition: 'background-color 0.3s, color 0.3s',
+      }}
+    >
+      Certifications
     </Box>
-  </Container>
+  </Box>
 </Box>
 
 
