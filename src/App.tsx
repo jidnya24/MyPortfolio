@@ -169,14 +169,18 @@ function App() {
     bgcolor: 'white',
     color: '#333',
     borderBottom: '1px solid #eee',
-    paddingTop: '80px',
+    paddingTop: { xs: '60px', md: '80px' }, //responsive
+    paddingX: { xs: 2, md: 0 }, //responsive
   }} ref={homeRef}
 >
   <Container maxWidth="md">
     <Typography
       variant="h2"
       gutterBottom
-      sx={{ mb: 3 }}
+      sx={{ mb: 3, 
+        fontSize: { xs: '2rem', md: '3rem' }, //responsive
+        textAlign: { xs: 'center', md: 'left' }, //responsive
+       }}
       data-aos="fade-right"
       data-aos-delay="0"
     >
@@ -185,7 +189,11 @@ function App() {
     </Typography>
     <Typography
       variant="h5"
-      sx={{ mb: 4, color: '#666' }}
+      sx={{ mb: 4, 
+        color: '#666',
+        fontSize: { xs: '1.1rem', md: '1.5rem' }, //respinsive
+        textAlign: { xs: 'center', md: 'left' },
+      }}
       data-aos="fade-up"
       data-aos-delay="1000"
     >
@@ -193,14 +201,20 @@ function App() {
     </Typography>
 
     {/* Animated Buttons */}
-    <Box sx={{ display: 'flex', gap: 2 }}>
+    <Box sx={{ display: 'flex', 
+      gap: 2,
+      flexDirection: { xs: 'column', sm: 'row' }, // responsive
+      justifyContent: { xs: 'center', sm: 'flex-start' }, //responsive
+      alignItems: 'center', }}>
       <Button
         variant="outlined"
         color="inherit"
         startIcon={<Github />}
         href="https://github.com/jidnya24"
         target="_blank"
-        sx={{ border: 'none' }}
+        sx={{ border: 'none', 
+          width: { xs: '100%', sm: 'auto' }, //responsive
+         }}
         data-aos="fade-right"
         data-aos-delay="2000"
       >
@@ -212,7 +226,9 @@ function App() {
         startIcon={<Linkedin />}
         href="https://www.linkedin.com/in/jidnya-mahajan-7405491b1/"
         target="_blank"
-        sx={{ border: 'none' }}
+        sx={{ border: 'none',
+          width: { xs: '100%', sm: 'auto' },
+        }}
         data-aos="fade-left"
         data-aos-delay="3000"
       >
